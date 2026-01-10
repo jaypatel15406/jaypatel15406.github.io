@@ -1,14 +1,11 @@
 :root {
-  --bg: #000000;
+  --bg: #000;
   --fg: #e8e8e8;
   --muted: #9a9a9a;
   --accent: #6ee7b7;
 }
 
-/* Reset */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
   margin: 0;
@@ -18,25 +15,49 @@ html, body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
-/* ---------------- Background ---------------- */
+/* Loader */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
 
+.loader-text {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.loader-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 1.4s infinite;
+}
+
+/* Background */
 .bg-image {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(
-      circle at 65% 30%,
-      rgba(255,255,255,0.08),
-      rgba(5,5,5,0.96) 60%
-    ),
+    radial-gradient(circle at 65% 30%, rgba(255,255,255,0.08), rgba(5,5,5,0.96) 60%),
     url("assets/jay.png") 80% center / 35% no-repeat;
-  filter: grayscale(100%) contrast(1.02);
-  opacity: 0.50;
+  opacity: 0.5;
+  filter: grayscale(100%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Subtle grid texture */
 .bg-grid {
   position: fixed;
   inset: 0;
@@ -46,27 +67,27 @@ html, body {
   background-size: 60px 60px;
   opacity: 0.15;
   pointer-events: none;
-  transition: transform 0.2s ease-out;
   z-index: 1;
 }
 
-/* Founder’s View logo */
+/* 🔥 FIXED LOGO */
 .bg-logo {
   position: fixed;
-  right: 2%;
   top: 2%;
+  right: 2%;
   width: 220px;
   height: 220px;
   background: url("assets/founders-view.png") center / contain no-repeat;
-  opacity: 0.40;
+  opacity: 0.45;
   filter: grayscale(100%);
   mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 2;
+
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
-/* ---------------- Layout ---------------- */
-
+/* Layout */
 .page {
   min-height: 100vh;
   display: flex;
@@ -76,117 +97,76 @@ html, body {
 }
 
 .content {
-  width: 100%;
   max-width: 720px;
   padding: 4rem 3rem;
-  display: grid;
-  grid-template-rows: auto 1fr auto auto;
-  gap: 2.2rem;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* ---------------- Typography ---------------- */
-
+/* Typography */
 h1 {
   font-size: 2.6rem;
-  font-weight: 400;
   margin: 0;
+  color: #fff;
 }
-
 .meta {
   font-size: 0.9rem;
   color: var(--muted);
-  margin-top: 0.6rem;
 }
-
-.message p {
+.statement {
   font-size: 1.15rem;
-  line-height: 1.7;
-  color: #d6d6d6;
-  margin: 0;
+  margin-top: 1rem;
 }
 
-/* ---------------- Status ---------------- */
-
+/* Status */
 .status {
   margin-top: 1.6rem;
-  display: inline-flex;
-  align-items: center;
+  display: flex;
   gap: 0.6rem;
-  font-size: 0.85rem;
-  color: var(--muted);
+  align-items: center;
 }
-
 .status span {
-  width: 6px;
-  height: 6px;
+  width: 9px;
+  height: 9px;
   background: var(--accent);
   border-radius: 50%;
   animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
-  0% { opacity: 0.3; }
+  0% { opacity: .3; }
   50% { opacity: 1; }
-  100% { opacity: 0.3; }
+  100% { opacity: .3; }
 }
 
-/* ---------------- Social ---------------- */
-
+/* Social */
 .social {
   display: flex;
   gap: 1.6rem;
-  font-size: 0.8rem;
+  margin-top: 2rem;
 }
-
+.social img {
+  width: 14px;
+  filter: invert(1);
+  opacity: .65;
+}
 .social a {
   color: var(--muted);
   text-decoration: none;
 }
+.social a:hover { color: var(--fg); }
 
-.social a:hover {
-  color: var(--fg);
-}
-
-/* ---------------- Footer ---------------- */
-
+/* Footer */
 footer {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.7rem;
+  margin-top: 2.5rem;
+  font-size: .7rem;
   color: var(--muted);
 }
 
-/* ---------------- Responsive ---------------- */
-
+/* Responsive */
 @media (max-width: 768px) {
-  .content {
-    padding: 2.5rem 2rem;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  .message p {
-    font-size: 1.05rem;
-  }
-
-  footer {
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
   .bg-logo {
-    right: 50%;
-    transform: translateX(50%);
-    top: 5%;
     width: 140px;
     height: 140px;
+    right: 50%;
+    transform: translateX(50%);
   }
 }
